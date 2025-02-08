@@ -1,38 +1,56 @@
-# Telecom Churn Prediction
+# Telecom Customer Churn Prediction
 
-## Project Overview
-This project aims to predict customer churn in the telecom sector using machine learning models. The dataset contains customer usage patterns, and the goal is to identify high-value customers who are likely to churn in the future. 
+## Overview
+This project aims to predict customer churn in the telecom industry by analyzing user behavior and identifying high-risk customers. The goal is to help the company take proactive measures to retain customers by offering personalized services and benefits.
 
-## Dataset
-- The dataset contains customer recharge amounts, call durations, and data usage over multiple months.
-- Churn is defined as customers who have not used incoming or outgoing calls and data services in the last observed month.
+## Dataset Information
+The dataset contains telecom user details, including recharge amounts, call durations, and data usage over multiple months. Churn is defined based on customers who show no activity in the last month.
 
-## Steps Involved
-1. **Data Preprocessing**
-   - Handle missing values and convert columns to appropriate formats.
-   - Select high-value customers based on recharge amounts.
-   - Define churn based on customer inactivity in the last month.
-   - Drop churn-phase columns to prevent data leakage.
+### Key Features:
+- **Recharge Amounts:** Monthly recharge amounts for different periods.
+- **Call Usage:** Incoming and outgoing call minutes.
+- **Data Usage:** 2G and 3G data consumption.
+- **Churn Indicator:** Defined as users with no outgoing/incoming calls and no data usage in the last observed month.
 
-2. **Feature Engineering & Scaling**
-   - Standardize numerical features using `StandardScaler`.
-   - Select appropriate features for training.
+## Implementation Steps
+### 1. Data Preprocessing
+- Load the dataset and perform initial exploration.
+- Filter high-value customers based on recharge amount thresholds.
+- Handle missing values and data inconsistencies.
 
-3. **Model Training & Evaluation**
-   - Train three classification models: Logistic Regression, Random Forest, and XGBoost.
-   - Evaluate models using accuracy, AUC-ROC score, and classification report.
-   - Visualize ROC curves for comparison.
+### 2. Feature Engineering
+- Identify the most relevant features impacting customer churn.
+- Remove data from the churn phase to avoid data leakage.
+- Standardize numerical variables for better model performance.
 
-4. **Feature Importance Analysis**
-   - Identify top features influencing churn prediction using the best-performing model.
-   - Visualize feature importance.
+### 3. Model Training & Evaluation
+Three classification models were trained and evaluated:
+- **Logistic Regression**
+- **Random Forest Classifier**
+- **XGBoost Classifier**
 
-5. **Business Recommendations**
-   - Target high-risk customers with special offers.
-   - Improve network quality in high-churn areas.
-   - Provide loyalty benefits to early churn indicators.
+#### Model Evaluation Metrics:
+- **Accuracy Score**
+- **AUC-ROC Score**
+- **Confusion Matrix & Classification Report**
+
+### 4. Feature Importance Analysis
+- The best-performing model was selected based on AUC-ROC score.
+- Important features contributing to churn prediction were identified using feature importance from Random Forest/XGBoost.
+
+## Results
+- **Best Model:** Random Forest/XGBoost (whichever had the highest AUC-ROC score)
+- **Top Contributing Features:**
+  - Total recharge amount
+  - Outgoing call duration
+  - Data consumption trends
   
-   - 
+## Business Recommendations
+- **Target high-risk customers** with special offers before they churn.
+- **Improve network quality** in areas with high churn rates.
+- **Offer loyalty benefits** to users showing early churn behavior.
+- **Enhance customer engagement** by analyzing top churn predictors and designing personalized retention strategies.
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -140,5 +158,7 @@ print("- Target high-risk customers with special offers before churn.")
 print("- Improve network quality in regions where churn is high.")
 print("- Offer loyalty benefits to customers showing early churn behavior.")
 
-## Author
-- **Farheen Zahra**
+## Conclusion
+This project provides valuable insights into telecom customer churn patterns and suggests actionable strategies for retention. By leveraging machine learning, businesses can predict churn early and take necessary steps to improve customer loyalty and revenue retention.
+
+
