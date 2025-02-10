@@ -1,55 +1,137 @@
-# Telecom Customer Churn Prediction
+# Telecom Churn Prediction
 
-## Overview
-This project aims to predict customer churn in the telecom industry by analyzing user behavior and identifying high-risk customers. The goal is to help the company take proactive measures to retain customers by offering personalized services and benefits.
+## Introduction and Problem Statement
 
-## Dataset Information
-The dataset contains telecom user details, including recharge amounts, call durations, and data usage over multiple months. Churn is defined based on customers who show no activity in the last month.
+### Business Problem Overview
 
-### Key Features:
-- **Recharge Amounts:** Monthly recharge amounts for different periods.
-- **Call Usage:** Incoming and outgoing call minutes.
-- **Data Usage:** 2G and 3G data consumption.
-- **Churn Indicator:** Defined as users with no outgoing/incoming calls and no data usage in the last observed month.
+In the telecom industry, customers can choose from multiple service providers and actively switch from one operator to another. This results in an average annual churn rate of **15-25%**. Given that acquiring a new customer costs **5-10 times** more than retaining an existing one, customer retention has become a higher priority than customer acquisition.
 
-## Implementation Steps
-### 1. Data Preprocessing
-- Load the dataset and perform initial exploration.
-- Filter high-value customers based on recharge amount thresholds.
-- Handle missing values and data inconsistencies.
+For many telecom operators, **retaining highly profitable customers is the number one business goal**. To minimize churn, telecom companies need to predict which high-value customers are at risk and take proactive measures.
 
-### 2. Feature Engineering
-- Identify the most relevant features impacting customer churn.
-- Remove data from the churn phase to avoid data leakage.
-- Standardize numerical variables for better model performance.
+### Objective
 
-### 3. Model Training & Evaluation
-Three classification models were trained and evaluated:
-- **Logistic Regression**
-- **Random Forest Classifier**
-- **XGBoost Classifier**
+This project analyzes **customer-level data** from a leading telecom firm to:
+- **Build predictive models** to identify high-risk customers.
+- **Identify key churn indicators** to help businesses retain customers.
 
-#### Model Evaluation Metrics:
-- **Accuracy Score**
-- **AUC-ROC Score**
-- **Confusion Matrix & Classification Report**
+## Understanding and Defining Churn
 
-### 4. Feature Importance Analysis
-- The best-performing model was selected based on AUC-ROC score.
-- Important features contributing to churn prediction were identified using feature importance from Random Forest/XGBoost.
+### Telecom Business Models
+
+Telecom services operate under two primary models:
+1. **Postpaid Model** - Customers receive a bill for services used and must notify the provider to switch operators.
+2. **Prepaid Model** - Customers pay in advance and can stop using services without notice, making churn prediction challenging.
+
+Churn prediction is especially **critical in prepaid services**, which dominate markets in **India and Southeast Asia**.
+
+### Defining Churn
+
+There are multiple ways to define churn:
+1. **Revenue-based churn** - Customers who do not generate revenue for a given period.
+2. **Usage-based churn** - Customers with zero incoming or outgoing calls, SMS, or mobile data usage for a defined time.
+
+This project uses the **usage-based churn definition**.
+
+## High-Value Customer Churn
+
+Approximately **80% of telecom revenue** comes from the **top 20% of customers** (high-value customers). Reducing churn among these customers minimizes revenue loss significantly.
+
+### Identifying High-Value Customers
+
+Customers who have recharged with an amount **greater than or equal to the 70th percentile of the average recharge amount** in the first two months are classified as high-value customers.
+
+## Dataset Overview
+
+### Data Collection
+
+The dataset contains **customer-level information over four months** (June-September), labeled as months **6, 7, 8, and 9**.
+
+### Business Objective
+
+The goal is to **predict churn in month 9** using features from months **6, 7, and 8**.
+
+### Customer Behavior Phases
+
+- **Good Phase**: Customers are satisfied (Months 6 & 7)
+- **Action Phase**: Customers start experiencing dissatisfaction (Month 8)
+- **Churn Phase**: Customers have churned (Month 9)
+
+After defining churn, **all data related to month 9 is removed from modeling**.
+
+### Data Dictionary
+
+The dataset includes various features such as:
+- **Recharge amounts** (total_rech_amt_6, total_rech_amt_7, etc.)
+- **Usage data** (total_ic_mou_6, total_og_mou_6, vol_2g_mb_6, etc.)
+- **Customer interactions** (calls, SMS, data usage)
+
+## Data Preparation
+
+### Steps Taken
+
+1. **Filtering High-Value Customers**
+   - Customers who have recharged above the **70th percentile** of average recharge amounts in months **6 and 7** are considered.
+
+2. **Tagging Churners**
+   - Customers with **zero incoming/outgoing calls and zero mobile data usage in month 9** are marked as churners.
+
+3. **Dropping Month 9 Data**
+   - Since month 9 represents churn, all related columns are removed.
+
+## Model Development
+
+### Predictive Modeling Goals
+
+1. **Predict churn probability for high-value customers**.
+2. **Identify the most important features driving churn**.
+
+### Handling Class Imbalance
+
+Since churn rates are typically **low (5-10%)**, techniques such as **oversampling, undersampling, or SMOTE** are considered.
+
+### Model Selection
+
+The following machine learning models are implemented:
+1. **Logistic Regression**
+2. **Random Forest Classifier**
+3. **XGBoost Classifier**
+
+## Model Evaluation
+
+### Evaluation Metrics
+
+- **Accuracy**: Measures correct predictions.
+- **ROC-AUC Score**: Evaluates how well the model distinguishes churners vs. non-churners.
+- **Confusion Matrix**: Helps analyze false positives and false negatives.
+- **Feature Importance**: Identifies top features influencing churn.
 
 ## Results
-- **Best Model:** Random Forest/XGBoost (whichever had the highest AUC-ROC score)
-- **Top Contributing Features:**
-  - Total recharge amount
-  - Outgoing call duration
-  - Data consumption trends
-  
+
+- **XGBoost performed the best**, achieving the highest ROC-AUC score.
+- **Feature Importance Analysis** revealed key churn indicators:
+  - **Recharge Amounts**: Drop in recharge amounts signals churn risk.
+  - **Call Duration**: Lower call minutes indicate customer dissatisfaction.
+  - **Data Usage**: Reduced internet usage suggests potential churn.
+
 ## Business Recommendations
-- **Target high-risk customers** with special offers before they churn.
-- **Improve network quality** in areas with high churn rates.
-- **Offer loyalty benefits** to users showing early churn behavior.
-- **Enhance customer engagement** by analyzing top churn predictors and designing personalized retention strategies.
+
+### **Preventive Measures to Reduce Churn**
+
+1. **Early Identification of At-Risk Customers**
+   - Offer personalized retention plans to customers showing reduced activity.
+
+2. **Customer-Centric Retention Strategies**
+   - Special discounts, loyalty programs, and exclusive plans for high-value customers.
+
+3. **Service Quality Improvement**
+   - Enhancing network infrastructure and customer support to improve user experience.
+
+4. **Competitive Analysis**
+   - Monitor competitor offerings and proactively adjust pricing and services.
+
+## Conclusion
+
+This project successfully developed a predictive model to **identify high-risk churners**, allowing telecom companies to take proactive retention measures. By implementing these insights, businesses can significantly reduce churn and enhance customer loyalty.
 
 import pandas as pd
 import numpy as np
